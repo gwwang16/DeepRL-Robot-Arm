@@ -1,22 +1,19 @@
 <?xml version="1.0" ?>
 <sdf version="1.4">
 <world name="arm_world">
-	<!--<include>
-		<uri>model://sun</uri>
-	</include>-->
 	<light name='sun' type='directional'>
-		<cast_shadows>1</cast_shadows>
-		<pose>0 0 10 0 -0 0</pose>
-		<diffuse>0.8 0.8 0.8 1</diffuse>
-		<specular>0.2 0.2 0.2 1</specular>
-		<attenuation>
-			<range>1000</range>
-			<constant>0.9</constant>
-			<linear>0.01</linear>
-			<quadratic>0.001</quadratic>
-		</attenuation>
-		<direction>-0.5 0.1 -0.9</direction>
-	</light>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 15 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
 
 	<!-- Ground Plane -->
 	<include>
@@ -58,6 +55,12 @@
 					<size>0.4 0.4 0.2</size>
 				</box>
 			</geometry>
+			<material>
+				<script>
+					<uri>file://media/materials/scripts/gazebo.material</uri>
+              		<name>Gazebo/Grey</name>
+				</script>
+			</material>
 		</visual>
 		</link>
 
@@ -78,6 +81,12 @@
 					<length>.15</length>
 				</cylinder>
 			</geometry>
+			<material>
+				<script>
+					<uri>file://media/materials/scripts/gazebo.material</uri>
+              		<name>Gazebo/Grey</name>
+				</script>
+			</material>
 		</visual>
 		</link>
 
@@ -114,6 +123,12 @@
 					<size>.1 .1 .6</size>
 				</box>
 			</geometry>
+			<material>
+				<script>
+					<uri>file://media/materials/scripts/gazebo.material</uri>
+              		<name>Gazebo/Grey</name>
+				</script>
+			</material>
 		</visual>
 		</link>
 
@@ -135,6 +150,12 @@
 					<length>.15</length>
 				</cylinder>
 			</geometry>
+			<material>
+				<script>
+					<uri>file://media/materials/scripts/gazebo.material</uri>
+              		<name>Gazebo/Grey</name>
+				</script>
+			</material>
 		</visual>
 		</link>
 
@@ -164,6 +185,12 @@
 					<size>.1 .1 .6</size>
 				</box>
 			</geometry>
+			<material>
+				<script>
+					<uri>file://media/materials/scripts/gazebo.material</uri>
+              		<name>Gazebo/Grey</name>
+				</script>
+			</material>
 		</visual>
 		</link>
         
@@ -184,6 +211,12 @@
 				<geometry>
 		            <mesh><uri>file://meshes/gripper/gripper_base.dae</uri></mesh>
 				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+              			<name>Gazebo/Grey</name>
+					</script>
+				</material>
 			</visual>
 			<collision name="gripper_link">    
 				<geometry>
@@ -199,7 +232,7 @@
 				<box>
 					<size>.01 .01 .07</size>
 				</box>
-			</geometry>
+			</geometry>			
 			</collision>              
 			<visual name="middle_vision">
 				<geometry>
@@ -207,6 +240,12 @@
 						<size>.01 .01 .07</size>
 					</box>
 				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+              			<name>Gazebo/Grey</name>
+					</script>
+				</material>
 			</visual>
 		</link>
 
@@ -227,11 +266,17 @@
 				<geometry>
 					<mesh><uri>file://meshes/gripper/finger_right.dae</uri></mesh>
 				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+              			<name>Gazebo/Grey</name>
+					</script>
+				</material>
 			</visual>
 			<collision name="right_gripper">
 				<geometry>
                     <mesh><uri>file://meshes/gripper/finger_right.dae</uri></mesh>
-			    </geometry>
+			    </geometry>				
 			</collision>
 		</link>
 
@@ -252,6 +297,12 @@
 				<geometry>
 					<mesh><uri>file://meshes/gripper/finger_left.dae</uri></mesh>
 				</geometry>
+				<material>
+					<script>
+						<uri>file://media/materials/scripts/gazebo.material</uri>
+              			<name>Gazebo/Grey</name>
+					</script>
+				</material>
 			</visual>
 			<collision name="left_gripper">
 				<geometry>
@@ -484,6 +535,15 @@
 		</joint>
 		<plugin name="PropPlugin" filename="libgazeboPropPlugin.so" />
 	</model>
+
+
+	<!-- <material name="LightGrey">
+		<color rgba="0.5 0.5 0.5 1.0"/>
+	</material>
+
+	<material name="Orange">
+		<color rgba="1 0.424 0.039 1.0"/>
+	</material> -->
 
 </world>
 </sdf>
