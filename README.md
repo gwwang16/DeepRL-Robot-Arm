@@ -1,6 +1,11 @@
 
 # Deep RL Arm Manipulation
 
+
+<https://youtu.be/pjYxtJ0pTRY>
+
+![alt text][task2_gif]
+
 This project is based on the Nvidia open source project "jetson-reinforcement" developed by [Dustin Franklin](https://github.com/dusty-nv). The goal of the project is to create a DQN agent and define reward functions to teach a robotic arm to carry out two primary objectives:
 
 1. Have any part of the robot arm touch the object of interest, with at least a 90% accuracy.
@@ -33,7 +38,7 @@ During the `cmake` step, Torch will be installed so it can take awhile. It will 
 
 To make sure that the reinforcement learners are still functioning properly from C++, a simple example of using the API called [`catch`](samples/catch/catch.cpp) is provided.  Similar in concept to pong, a ball drops from the top of the screen which the agent must catch before the ball reaches the bottom of the screen, by moving it's paddle left or right.
 
-To test the textual [`catch`](samples/catch/catch.cpp) sample, run the following executable from the terminal.  After around 100 episodes or so, the agent should start winning the episodes nearly 100% of the time:  
+To test the textual [`catch`](samples/catch/catch.cpp) sample, run the following executable from the terminal:
 
 ``` bash
 $ cd RoboND-DeepRL-Project/build/aarch64/bin
@@ -60,9 +65,6 @@ $ ./catch
 [deepRL]  nn.Conv2d() output size = 800
 WON! episode 1
 001 for 001  (1.0000)  
-WON! episode 5
-004 for 005  (0.8000)  
-WON! episode 10
 ......
 WON! episode 112
 080 for 112  (0.7143)  20 of last 20  (1.00)  (max=1.00)
@@ -77,6 +79,7 @@ To get started with the project environment, run the following:
 
 ``` bash
 $ cd RoboND-DeepRL-Project/build/aarch64/bin
+$ chmod +x gazebo-arm.sh
 $ ./gazebo-arm.sh
 ```
 
@@ -84,16 +87,12 @@ $ ./gazebo-arm.sh
 
 The plugins which hook the learning into the simulation are located in the `gazebo/` directory of the repo. The RL agent and the reward functions are to be defined in [`ArmPlugin.cpp`](gazebo/ArmPlugin.cpp).
 
+### Results
 
-
-### Task 1
+- Task 1
 
 ![alt text][task1]
 
 
-
-### Task 2
-
-<https://youtu.be/pjYxtJ0pTRY>
-
-![alt text][task2_gif]
+- Task 2
+![alt text][task2]
