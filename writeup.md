@@ -13,6 +13,7 @@ This project is based on the Nvidia open source project "jetson-reinforcement" d
 [task2]:./imgs/result2.png
 [task2_]:./imgs/result2_.png
 [task2_gif]:./imgs/result2.gif
+[challenge1]:./imgs/challenge1.png
 
 
 
@@ -231,10 +232,33 @@ newReward     = true;
   | ---- | ---- |
   |   ![alt text][task2]   |   ![alt text][task2_]   |
 
-  ​
 
 
+### Challenges
 
+##### Challenge1: Object Randomization
+
+  The object will instantiate at different locations along the x-axis.
+
+- Use a larger `INPUT_WIDTH` and `INPUT_HEIGHT` value to distinguish object more clear.
+
+  ```
+  #define INPUT_WIDTH   128
+  #define INPUT_HEIGHT  128
+  ```
+
+- Revise the intermediary reward, give more penalty for arm stop
+
+```
+if(avgGoalDelta > 0.01)
+{rewardHistory = (REWARD_WIN + distPenalty*0.1f)*0.1f;}
+else
+{rewardHistory = REWARD_LOSS - distGoal*2.0f;}
+```
+
+- 70% accuracy is achieved.  A better result can be obtained with larger input width and height value, however, tx2 cannot deal with this computational task.
+
+![alt text][challenge1]
 
 
 ### Further Work

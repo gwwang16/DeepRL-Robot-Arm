@@ -27,13 +27,13 @@
 #define ALLOW_RANDOM true
 #define DEBUG_DQN false
 #define GAMMA 0.9f
-#define EPS_START 0.9f
+#define EPS_START 0.99f
 #define EPS_END 0.01f
 #define EPS_DECAY 200
 
 // TODO - Tune the following hyperparameters
-#define INPUT_WIDTH   64
-#define INPUT_HEIGHT  64
+#define INPUT_WIDTH   128
+#define INPUT_HEIGHT  128
 #define OPTIMIZER "Adam"
 #define LEARNING_RATE 0.01f
 #define REPLAY_MEMORY 10000
@@ -437,7 +437,7 @@ bool ArmPlugin::updateJoints()
 		}
 		else if( animationStep == ANIMATION_STEPS / 2 )
 		{	
-			ResetPropDynamics();
+			RandomizeProps();
 		}
 
 		return true;
@@ -624,7 +624,7 @@ void ArmPlugin::OnUpdate(const common::UpdateInfo& updateInfo)
                 if(avgGoalDelta > 0.01)
 				{rewardHistory = (REWARD_WIN + distPenalty*0.1f)*0.1f;}
 				else
-				{rewardHistory = - distGoal*2.0f;}
+				{rewardHistory = REWARD_LOSS - distGoal*2.0f;}
 
 				newReward     = true;
 				printf("distGoal is %0.3f, distPenalty is %0.3f, rewardHistory is %0.3f\n", distGoal,distPenalty,rewardHistory);
