@@ -9,7 +9,9 @@ This project is based on the Nvidia open source project "jetson-reinforcement" d
 [//]: # "Image References"
 
 [task1]:./imgs/result1.png
+[task1_]:./imgs/result1_.png
 [task2]:./imgs/result2.png
+[task2_]:./imgs/result2_.png
 [task2_gif]:./imgs/result2.gif
 
 
@@ -210,19 +212,28 @@ newReward     = true;
 | Task            | Total Runs | Accuracy |
 | --------------- | ---------- | -------- |
 | 1: Arm          | 17         | 94.12%   |
+| 1: Arm          | 124       | 90.32% |
 | 2: Gripper base | 35         | 80.00%   |
+| 2: Gripper base | 491         | 90.02%   |
 
 - Task 1: Any parts of arm touching the prop
 
-![alt text][task1]
-
+  |      |      |
+  | ---- | ---- |
+  |   ![alt text][task1]   |   ![alt text][task1_]   |
 
 
 - Task 2: Gripper base touching the prop
 
   https://youtu.be/pjYxtJ0pTRY
 
-![alt text][task2]
+  |      |      |
+  | ---- | ---- |
+  |   ![alt text][task2]   |   ![alt text][task2_]   |
+
+  ​
+
+
 
 
 
