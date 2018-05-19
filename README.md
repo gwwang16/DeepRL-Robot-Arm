@@ -6,6 +6,12 @@ This project is based on the Nvidia open source project "jetson-reinforcement" d
 1. Have any part of the robot arm touch the object of interest, with at least a 90% accuracy.
 2. Have only the gripper base of the robot arm touch the object, with at least a 80% accuracy.
 
+[//]: # "Image References"
+
+[task1]:./imgs/result1.png
+[task2]:./imgs/result2.png
+[task2_gif]:./imgs/result2.gif
+
 ## Building from Source (Nvidia Jetson TX2)
 
 Run the following commands from terminal to build the project from source:
@@ -77,3 +83,17 @@ $ ./gazebo-arm.sh
 <img src="https://github.com/dusty-nv/jetson-reinforcement/raw/master/docs/images/gazebo_arm.jpg">
 
 The plugins which hook the learning into the simulation are located in the `gazebo/` directory of the repo. The RL agent and the reward functions are to be defined in [`ArmPlugin.cpp`](gazebo/ArmPlugin.cpp).
+
+
+
+### Task 1
+
+![alt text][task1]
+
+
+
+### Task 2
+
+<https://youtu.be/pjYxtJ0pTRY>
+
+![alt text][task2_gif]
