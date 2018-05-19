@@ -18,9 +18,9 @@
 #define BASE_JOINT_MAX  0.75f
 
 // Turn on velocity based control
-#define VELOCITY_CONTROL false
-#define VELOCITY_MIN -0.2f
-#define VELOCITY_MAX  0.2f
+#define VELOCITY_CONTROL true
+#define VELOCITY_MIN -0.1f
+#define VELOCITY_MAX  0.1f
 
 // Define DQN API Settings
 #define INPUT_CHANNELS 3
@@ -28,7 +28,7 @@
 #define DEBUG_DQN false
 #define GAMMA 0.9f
 #define EPS_START 0.9f
-#define EPS_END 0.01f
+#define EPS_END 0.05f
 #define EPS_DECAY 200
 
 // TODO - Tune the following hyperparameters
@@ -37,18 +37,19 @@
 #define OPTIMIZER "Adam"
 #define LEARNING_RATE 0.01f
 #define REPLAY_MEMORY 10000
-#define BATCH_SIZE 128
+#define BATCH_SIZE 32
 #define USE_LSTM true
-#define LSTM_SIZE 16
+#define LSTM_SIZE 256
 
 // TODO - Define Reward Parameters
-#define REWARD_WIN  1.0f
-#define REWARD_LOSS -1.0f
+#define REWARD_WIN  10.0f
+#define REWARD_LOSS -10.0f
 
 // Define Object Names
 #define WORLD_NAME "arm_world"
 #define PROP_NAME  "tube"
 #define GRIP_NAME  "gripper_middle"
+// #define GRIP_NAME  "gripper_middle"
 
 // Define Collision Parameters
 #define COLLISION_FILTER "ground_plane::link::collision"
@@ -68,7 +69,8 @@
 
 
 namespace gazebo
-{ 
+{
+ 
 // register this plugin with the simulator
 GZ_REGISTER_MODEL_PLUGIN(ArmPlugin)
 
@@ -260,7 +262,7 @@ void ArmPlugin::onCollisionMsg(ConstContactsPtr &contacts)
 			if((strcmp(contacts->contact(i).collision2().c_str(), COLLISION_POINT) == 0))
 			{
 				// rewardHistory = (1.0f - (float(episodeFrames) / float(maxEpisodeLength))) * REWARD_WIN;
-				rewardHistory = REWARD_WIN*10.0f + (1.0f - (float(episodeFrames) / float(maxEpisodeLength))) * REWARD_WIN * 100.0f;
+				rewardHistory = REWARD_WIN*20.0f + (1.0f - (float(episodeFrames) / float(maxEpisodeLength))) * REWARD_WIN * 50.0f;
 
 				// Set gripper
 				//j2_controller->SetJointPosition(this->model->GetJoint("gripper_right"),  0.5);
@@ -548,7 +550,7 @@ void ArmPlugin::OnUpdate(const common::UpdateInfo& updateInfo)
 	if( maxEpisodeLength > 0 && episodeFrames > maxEpisodeLength )
 	{
 		printf("ArmPlugin - triggering EOE, episode has exceeded %i frames\n", maxEpisodeLength);
-		rewardHistory = REWARD_LOSS*10.0f;
+		rewardHistory = REWARD_LOSS * 10.0f;
 		newReward     = true;
 		endEpisode    = true;
 	}
@@ -589,7 +591,7 @@ void ArmPlugin::OnUpdate(const common::UpdateInfo& updateInfo)
 		if( checkGroundContact )
 		{
 			printf("GROUND CONTACT, EOE\n");
-			rewardHistory = REWARD_LOSS * 10.0f + (gripBBox.min.x - propBBox.min.x) * 10.0f;
+			rewardHistory = REWARD_LOSS * 20.0f + (gripBBox.min.x - propBBox.min.x) * 100.0f;
 			newReward     = true;
 			endEpisode    = true;
 		}
@@ -601,31 +603,28 @@ void ArmPlugin::OnUpdate(const common::UpdateInfo& updateInfo)
 			if( episodeFrames > 1 )
 			{
 				const float distDelta  = lastGoalDistance - distGoal;
-				const float alpha = 0.9f;
+				const float alpha = 0.2f;
+
+                float distGoalx = gripBBox.max.x - propBBox.max.x;
+                
 				// compute the smoothed moving average of the delta of the distance to the goal
 				avgGoalDelta  = (avgGoalDelta * alpha) + (distDelta * (1.0f - alpha));
-
-				float distPenalty = (1.0f - exp(distGoal));
-				float distGoalx = gripBBox.max.x - propBBox.max.x;
-
-				// Reward for task 1 with velocity control
+				float distPenalty = (1.0f - exp(distGoal)); 
 				// if(avgGoalDelta > 0)
 				// {rewardHistory = REWARD_WIN * 0.5f - distGoal * 0.5f + distPenalty;}
 				// else
 				// {rewardHistory = avgGoalDelta + distPenalty;}
 
-				// Reward for task 2 with velocity control (tunning)
 				// if(avgGoalDelta > 0.1)
 				// {rewardHistory = REWARD_WIN * 0.1f  + distPenalty;}
 				// else
 				// {rewardHistory = avgGoalDelta + distPenalty;}
 
-				//Reward for task 2 with position control
                 if(avgGoalDelta > 0.01)
-				{rewardHistory = (REWARD_WIN + distPenalty*0.1f)*0.1f;}
+				{rewardHistory = (REWARD_WIN * 0.3f - distGoal + distPenalty*0.5f - exp(distGoalx));}
 				else
-				{rewardHistory = - distGoal*2.0f;}
-
+				{rewardHistory = avgGoalDelta - distGoal + distPenalty*0.5f - exp(distGoalx);}
+				
 				newReward     = true;
 				printf("distGoal is %0.3f, distPenalty is %0.3f, rewardHistory is %0.3f\n", distGoal,distPenalty,rewardHistory);
 

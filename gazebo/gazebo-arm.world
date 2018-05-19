@@ -49,7 +49,7 @@
 				</box>
 			</geometry>
 		</collision>
-		<visual name="visual">
+		<visual name="visual"> 
 			<geometry>
 				<box>
 					<size>0.4 0.4 0.2</size>
