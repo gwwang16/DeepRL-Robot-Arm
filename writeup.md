@@ -46,7 +46,7 @@ There are several sections need to be tuned in `ArmPlugin.cpp`, I used different
 
 I used velocity control in this task, i.e., `VELOCITY_CONTROL` is set to be `true`. 
 
-`INPUT_WIDTH` and `INPUT_HEIGHT` are reduced into 64 from 512 to save memory.
+`INPUT_WIDTH` and `INPUT_HEIGHT` are reduced to 64 from 512 to save memory.
 
 `USE_LSTM` is true with lstm size of 256.  
 
@@ -238,6 +238,18 @@ newReward     = true;
 
 ##### Challenge1: Object Randomization
 
+Two set this challenge1 environment, the following steps:
+
+1. In `PropPlugin.cpp`, redefine the prop poses in `PropPlugin::Randomize()` to the following:
+
+   ```
+   pose.pos.x = randf(0.02f, 0.30f);
+   pose.pos.y = 0.0f;
+   pose.pos.z = 0.0f;
+   ```
+
+2. In `ArmPlugin.cpp`, replace `ResetPropDynamics();` set in the method `ArmPlugin::updateJoints()` with `RandomizeProps();`
+
   The object will instantiate at different locations along the x-axis.
 
 - Use a larger `INPUT_WIDTH` and `INPUT_HEIGHT` value to distinguish object more clear.
@@ -256,7 +268,7 @@ else
 {rewardHistory = REWARD_LOSS - distGoal*2.0f;}
 ```
 
-- 70% accuracy is achieved.  A better result can be obtained with larger input width and height value, however, tx2 cannot deal with this computational task.
+- 81.26% accuracy is achieved with all night running on Jeston TX2.  A better result is foreseeable with larger input width and height value, however, tx2 cannot deal with this computational task.
 
 ![alt text][challenge1]
 
@@ -266,5 +278,5 @@ else
 - Investigate how to use LSTM appropriately
 - Realize velocity control for task 2
 - Add more constraints to make arm touching prop softly.
-- Realize project challenges, such as random prop position, high arm DOF, etc.
+- Realize project challenges, such as unlock arm base, high arm DOF, etc.
 
