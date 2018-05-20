@@ -4,7 +4,7 @@
 
 <https://youtu.be/pjYxtJ0pTRY>
 
-![alt text][task2_gif]
+![alt text][challenge1_gif]
 
 This project is based on the Nvidia open source project "jetson-reinforcement" developed by [Dustin Franklin](https://github.com/dusty-nv). The goal of the project is to create a DQN agent and define reward functions to teach a robotic arm to carry out two primary objectives:
 
@@ -16,6 +16,7 @@ This project is based on the Nvidia open source project "jetson-reinforcement" d
 [task1]:./imgs/result1.png
 [task2]:./imgs/result2.png
 [task2_gif]:./imgs/result2.gif
+[challenge1_gif]:./imgs/challenge1.gif
 
 ## Building from Source (Nvidia Jetson TX2)
 

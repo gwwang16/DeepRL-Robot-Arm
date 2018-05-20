@@ -27,8 +27,8 @@
 #define ALLOW_RANDOM true
 #define DEBUG_DQN false
 #define GAMMA 0.9f
-#define EPS_START 0.99f
-#define EPS_END 0.01f
+#define EPS_START 0.9f
+#define EPS_END 0.05f
 #define EPS_DECAY 200
 
 // TODO - Tune the following hyperparameters
